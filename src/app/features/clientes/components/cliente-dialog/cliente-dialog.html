@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Editar Cliente' : 'Nuevo Cliente' }}</h1>
+
+<div mat-dialog-content [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre Completo</mat-label>
+        <input matInput formControlName="nombre" required>
+        <mat-error *ngIf="form.get('nombre')?.hasError('required')">El nombre es requerido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Número de Documento (Cédula/RUC)</mat-label>
+        <input matInput formControlName="nro_doc" required>
+        <mat-error *ngIf="form.get('nro_doc')?.hasError('required')">El documento es requerido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput type="email" formControlName="email">
+        <mat-error *ngIf="form.get('email')?.hasError('email')">Formato de correo inválido.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput formControlName="direccion">
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+    </button>
+</div>

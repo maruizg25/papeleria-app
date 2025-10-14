@@ -1,0 +1,59 @@
+<div class="dashboard-container">
+    <h1>Dashboard - Resumen del Día</h1>
+
+    @if (stats$ | async; as stats) {
+    <div class="kpi-grid">
+        <mat-card class="stat-card">
+            <div class="stat-icon-wrapper primary">
+                <mat-icon>monetization_on</mat-icon>
+            </div>
+            <div class="stat-info">
+                <span class="stat-title">Total Vendido Hoy</span>
+                <span class="stat-value">{{ stats.total_vendido | currency }}</span>
+            </div>
+        </mat-card>
+
+        <mat-card class="stat-card">
+            <div class="stat-icon-wrapper accent">
+                <mat-icon>receipt_long</mat-icon>
+            </div>
+            <div class="stat-info">
+                <span class="stat-title">Ventas Realizadas</span>
+                <span class="stat-value">{{ stats.numero_de_ventas }}</span>
+            </div>
+        </mat-card>
+    </div>
+
+    @if (topProductos$ | async; as topProductos) {
+    <mat-card class="top-products-card">
+        <mat-card-header>
+            <mat-card-title>
+                <mat-icon>star</mat-icon>
+                <span>Top 5 Productos Vendidos</span>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            @if (topProductos.length > 0) {
+            <div class="product-list">
+                @for (producto of topProductos; track producto.nombre; let i = $index) {
+                <div class="product-row">
+                    <span class="rank">{{ i + 1 }}</span>
+                    <span class="product-name">{{ producto.nombre }}</span>
+                    <span class="product-count">{{ producto.total_vendido }} uds.</span>
+                </div>
+                @if (i < topProductos.length - 1) { <mat-divider></mat-divider>
+                    }
+                    }
+            </div>
+            } @else {
+            <p class="no-data">Aún no se han vendido productos hoy.</p>
+            }
+        </mat-card-content>
+    </mat-card>
+    }
+    } @else {
+    <div class="loading-spinner">
+        <mat-spinner></mat-spinner>
+    </div>
+    }
+</div>

@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Editar Producto' : 'Nuevo Producto' }}</h1>
+<div mat-dialog-content [formGroup]="form">
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre del Producto</mat-label>
+        <input matInput formControlName="nombre" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <mat-select formControlName="categoria_id">
+            <mat-option [value]="null">-- Ninguna --</mat-option>
+            <mat-option *ngFor="let cat of categorias$ | async" [value]="cat.id">
+                {{cat.nombre}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Unidad de Medida</mat-label>
+        <mat-select formControlName="unidad_id" required>
+            <mat-option *ngFor="let uni of unidades$ | async" [value]="uni.id">
+                {{uni.nombre}}
+            </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('unidad_id')?.hasError('required')">La unidad es requerida.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>SKU / Código</mat-label>
+        <input matInput formControlName="sku">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Precio de Venta</mat-label>
+        <input matInput type="number" formControlName="precio" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Costo</mat-label>
+        <input matInput type="number" formControlName="costo" required>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onSave()">
+        {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+    </button>
+</div>

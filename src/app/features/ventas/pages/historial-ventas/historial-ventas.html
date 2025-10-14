@@ -1,0 +1,61 @@
+<div class="historial-container">
+    <div class="header">
+        <h1>Historial de Ventas</h1>
+    </div>
+
+    <mat-form-field appearance="outline" class="filter-field">
+        <mat-label>Buscar por No. Venta, Cliente o Total...</mat-label>
+        <input matInput (keyup)="applyFilter($event)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+    <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> No. Venta </th>
+                <td mat-cell *matCellDef="let venta"> #{{venta.numero}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha_emision">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+                <td mat-cell *matCellDef="let venta"> {{venta.creado_en | date: 'dd/MM/yyyy'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="cliente">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Cliente </th>
+                <td mat-cell *matCellDef="let venta"> {{venta.cliente?.nombre || 'Consumidor Final'}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="total_general">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total </th>
+                <td mat-cell *matCellDef="let venta"> {{venta.total_general | currency}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="estado_pago">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado Pago </th>
+                <td mat-cell *matCellDef="let venta"> {{venta.estado_pago}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let venta">
+                    <button mat-icon-button color="primary" (click)="verRecibo(venta.id)" matTooltip="Ver Recibo">
+                        <mat-icon>receipt_long</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                    No se encontraron ventas que coincidan con la búsqueda.
+                </td>
+            </tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 25, 100]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>Registrar Pago</h1>
+<div mat-dialog-content [formGroup]="form">
+    <div class="total-display">
+        <span>Total a Pagar</span>
+        <strong>{{ data.total | currency }}</strong>
+    </div>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Método de Pago</mat-label>
+        <mat-select formControlName="metodo">
+            <mat-option value="EFECTIVO">Efectivo</mat-option>
+            <mat-option value="TARJETA">Tarjeta</mat-option>
+            <mat-option value="TRANSFERENCIA">Transferencia</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Monto Recibido</mat-label>
+        <input matInput type="number" formControlName="monto">
+        <mat-error *ngIf="form.get('monto')?.hasError('min')">
+            El monto no puede ser menor al total.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" *ngIf="form.value.metodo !== 'EFECTIVO'">
+        <mat-label>Referencia</mat-label>
+        <input matInput formControlName="referencia" placeholder="Ej. Lote 123">
+    </mat-form-field>
+
+    @if (cambio() > 0) {
+    <div class="cambio-display">
+        <mat-icon>payments</mat-icon>
+        <span>Cambio a devolver</span>
+        <strong>{{ cambio() | currency }}</strong>
+    </div>
+    }
+</div>
+<div mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="onConfirm()">
+        Confirmar Pago
+    </button>
+</div>

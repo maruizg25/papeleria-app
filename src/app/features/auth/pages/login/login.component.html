@@ -1,0 +1,74 @@
+<div class="login-page-container">
+    <div class="background-pattern"></div>
+    <div class="blur-circle-1"></div>
+    <div class="blur-circle-2"></div>
+
+    <div class="login-card">
+        <header class="card-header">
+            <div class="logo-container">
+                <mat-icon>receipt_long</mat-icon>
+            </div>
+            <h1 class="card-title">PaperPoint</h1>
+            <p class="card-description">Sistema de Punto de Venta</p>
+        </header>
+
+        <div class="card-content">
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <div class="input-wrapper">
+                        <mat-icon>person</mat-icon>
+                        <input id="email" type="email" placeholder="usuario@paperpoint.com" formControlName="email"
+                            [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+                            [attr.disabled]="isLoading() ? true : null" autocomplete="email" />
+                    </div>
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="error-text">
+                        <mat-icon>error_outline</mat-icon>
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">El correo es requerido.</span>
+                        <span *ngIf="loginForm.get('email')?.errors?.['email']">Ingrese un correo válido.</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <div class="input-wrapper">
+                        <mat-icon>lock</mat-icon>
+                        <input id="password" type="password" placeholder="••••••••" formControlName="password"
+                            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                            [attr.disabled]="isLoading() ? true : null" autocomplete="current-password" />
+                    </div>
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                        class="error-text">
+                        <mat-icon>error_outline</mat-icon>
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es requerida.</span>
+                        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Mínimo 6 caracteres.</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" [disabled]="isLoading()">
+                    <ng-container *ngIf="!isLoading(); else loadingSpinner">
+                        Iniciar Sesión
+                    </ng-container>
+                    <ng-template #loadingSpinner>
+                        <div class="spinner"></div>
+                        <span>Iniciando sesión...</span>
+                    </ng-template>
+                </button>
+
+                <div *ngIf="errorMessage()" class="server-error-text">
+                    <mat-icon>error_outline</mat-icon>
+                    <span>{{ errorMessage() }}</span>
+                </div>
+
+                <div class="forgot-password">
+                    <button type="button">¿Olvidaste tu contraseña?</button>
+                </div>
+            </form>
+
+            <footer class="card-footer">
+                <p>PaperPoint POS v1.0 • Papelería y Librería</p>
+            </footer>
+        </div>
+    </div>
+</div>

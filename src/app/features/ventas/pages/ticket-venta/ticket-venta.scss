@@ -1,0 +1,116 @@
+.ticket-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 24px;
+}
+
+.ticket-card {
+  width: 100%;
+  max-width: 450px;
+}
+
+.ticket-header {
+  padding-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+  h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+  p {
+    margin: 0;
+    color: #616161;
+  }
+}
+
+.sale-details {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  color: #424242;
+}
+
+.item-list {
+  list-style: none;
+  padding: 16px 0;
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  
+  .item-name {
+    flex: 1;
+    padding-right: 16px;
+  }
+}
+
+.totals {
+  padding-top: 16px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  
+  &.grand-total {
+    font-size: 1.2rem;
+    padding-top: 16px;
+  }
+}
+
+// Estilos para la impresión
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  .ticket-container, .ticket-container * {
+    visibility: visible;
+  }
+
+  .ticket-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0;
+  }
+
+  .ticket-card {
+    box-shadow: none;
+    max-width: 100%;
+    border: 1px solid #ccc;
+  }
+
+  .print-button {
+    display: none;
+  }  
+}
+.customer-details {
+  padding: 16px 0;
+  
+  h3 {
+    margin: 0 0 8px 0;
+    font-size: 1em;
+    font-weight: 500;
+    color: #424242;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1.1em;
+  }
+  
+  .customer-doc {
+    font-size: 0.9em;
+    color: #757575;
+  }
+}
